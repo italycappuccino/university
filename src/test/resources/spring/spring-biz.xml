@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd" default-autowire="byName">
+	
+	<bean id="friendService" class="com.stone.university.imooc.annotation.FriendServiceImpl"></bean>
+	<bean id="cupWater" class="com.stone.university.imooc.annotation.CupWater"></bean>
+	<bean id="fileResource" class="com.stone.university.imooc.annotation.FileResource"></bean>
+
+</beans>

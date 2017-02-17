@@ -1,0 +1,169 @@
+var request;
+if(window.XMLHttpRequest){
+    request = new XMLHttpRequest();//IE7+,Firefox,Chrome,Opera,Safari...
+}else{
+    request = new ActiveXObject("Microsoft.XMLHTTP");//IE6,IE5
+}
+
+
+
+request.open("GET","get.php",true);
+request.send();
+
+request.open("POST","post.php",true);
+request.send();
+
+request.open("POST","login.php",true);
+request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+request.send("loginName=xxx&password=xxx");
+
+
+responseText
+responseXML
+status,statusText
+getAllResponseHeader()
+getResponseHeader()
+
+readyState
+0,1,2,3,4
+
+
+var request = new XMLHttpRequest();
+request.open("GET","get.php",true);
+request.send();
+request.onreadystatechange=function(){
+    if(request.readyState==4&&request.status==200){
+        //TODO
+        //request.responseText
+    }
+}
+
+
+XAMMP,https://www.apachefriends.org/download.html
+
+
+
+header("Content-Type:text/plain;charset=utf-8");
+header("Content-Type:application/json;charset=utf-8");
+header("Content-Type:text/xml;charset=utf-8");
+header("Content-Type:text/html;charset=utf-8");
+header("Content-Type:application/javascript;charset=utf-8");
+
+
+
+
+
+
+
+
+<script>
+document.getElementById("search").onclick=function(){
+var request = new XMLHttpRequest();
+request.open("GET","xx.php?number="+document.getElementById("keyword").value);
+request.send();
+request.onreadystatechange=function(){
+if(request.readyState==4){
+    if(request.status==200){
+        document.getElementById("searchResult").innerHTML = request.responseText;
+    }
+}
+}
+}
+
+document.getElementById("save").onclick=function(){
+var request = new XMLHttpRequest();
+request.open("POST","xx.php");
+var data = "name="+document.getElementById("loginName").value+"&password="+document.getElementById("password").value;
+request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+request.send(data);
+request.onreadystatechange=function(){
+if(request.readyState==4){
+    if(request.status==200){
+        document.getElementById("searchResult").innerHTML=request.responseText;
+    }
+}
+}
+}
+</script>
+
+
+
+//JSON
+
+<script>
+
+//GET方式
+document.getElementById("search").onclick=function(){
+var request = new XMLHttpRequest();
+request.open("GET","xx.php?number="+document.getElementById("keyword").value);
+request.send();
+request.onreadystatechange=function(){
+if(request.readyState==4){
+    if(request.status==200){
+    	var data = JSON.parse(request.responseText);
+    	if(data.success){
+    		document.getElementById("searchResult").innerHTML=data.msg;
+    	}else{
+    		document.getElementById("searchResult").innerHTML=data.msg;
+    	}
+        
+    }
+}
+}
+}
+
+
+//POST方式
+document.getElementById("save").onclick=function(){
+var request = new XMLHttpRequest();
+request.open("POST","xx.php");
+var data = "name="+document.getElementById("loginName").value+"&password="+document.getElementById("password").value;
+request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+request.send(data);
+request.onreadystatechange=function(){
+if(request.readyState==4){
+    if(request.status==200){
+        document.getElementById("searchResult").innerHTML=request.responseText;
+    }
+}
+}
+}
+
+
+
+//JQuery GET
+$.ajax({
+	type:"GET",
+	url:"${root.contextPath}/queryCity?cityCode="+$("#cityCode").val(),
+	dataType:"json",
+	success:function(data){
+		if(data.success){
+			$("#msg").html("2响应成功，城市名称："+data.city.name);
+		}else{
+			$("#msg").html("处理失败"+data.msg);
+		}
+	},
+	error:function(jqXHR){
+		alert("发生错误："+jqXHR.status);
+	}
+});
+	        
+//JQuery POST
+$.ajax({
+	type:"POST",
+	url:"${root.contextPath}/queryCity",
+	dataType:"json",
+	data:{cityCode:$("#cityCode").val()},
+	success:function(data){
+		if(data.success){
+			$("#msg").html("2响应成功，城市名称："+data.city.name);
+		}else{
+			$("#msg").html("处理失败"+data.msg);
+		}
+	},
+	error:function(jqXHR){
+		alert("发生错误："+jqXHR.status);
+	}
+});	        
+</script>
+

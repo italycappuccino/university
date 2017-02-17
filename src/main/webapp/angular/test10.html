@@ -1,0 +1,21 @@
+<!doctype html>
+<html ng-app="debounceExample">
+<head>
+<script src="../static/angularjs/1.4.4/angular.min.js"></script>
+<script type="text/javascript">
+angular.module('debounceExample', [])
+.controller('ExampleController', ['$scope', function($scope) {
+  $scope.user = {};
+}]);
+</script>
+</head>
+<body>
+<div ng-controller="ExampleController">
+  <form>
+    Name:
+    <input type="text" ng-model="user.name" ng-model-options="{ debounce: 250 }" /><br />
+  </form>
+  <pre>username = "{{user.name}}"</pre>
+</div>
+</body>
+</html>

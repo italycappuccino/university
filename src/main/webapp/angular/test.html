@@ -1,0 +1,62 @@
+<!doctype html>
+<html ng-app="myApp" ng-init="qty=1;cost=2">
+  <head>
+  <meta charset="utf-8">
+  <style type="text/css">
+  div.spicy div {
+  padding: 10px;
+  border: solid 2px blue;
+}
+  </style>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script> -->
+    <script src="../static/angularjs/1.4.4/angular.min.js"></script>
+    <script type="text/javascript" src="a.js"></script>
+  </head>
+  <body>
+  <div>
+  <b>Invoice:</b>
+  <div>
+    Quantity: <input type="number" min="0" ng-model="qty">
+  </div>
+  <div>
+    Costs: <input type="number" min="0" ng-model="cost">
+  </div>
+  <div>
+    <b>Total:</b> {{qty * cost | currency}}
+  </div>
+  
+  <div ng-controller="DoubleController">
+  Two times <input ng-model="num"> equals {{ double(num) }}
+</div>
+
+<div ng-controller="SpicyController">
+ <button ng-click="chiliSpicy()">Chili</button>
+ <button ng-click="jalapenoSpicy()">Jalapeño</button>
+ <p>The food is {{spice}} spicy!</p>
+</div>
+
+<div ng-controller="SpicyController2">
+ <input ng-model="customSpice">
+ <button ng-click="spicy('chili')">Chili</button>
+ <button ng-click="spicy(customSpice)">Custom spice</button>
+ <p>The food is {{spice}} spicy!</p>
+</div>
+
+
+
+<div class="spicy">
+  <div ng-controller="MainController">
+    <p>Good {{timeOfDay}}, {{name}}!</p>
+
+    <div ng-controller="ChildController">
+      <p>Good {{timeOfDay}}, {{name}}!</p>
+
+      <div ng-controller="GrandChildController">
+        <p>Good {{timeOfDay}}, {{name}}!</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+  </body>
+</html>

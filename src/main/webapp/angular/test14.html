@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app="docsBindExample">
+<head>
+<meta charset="utf-8">
+<script src="../static/angularjs/1.4.4/angular.min.js"></script>
+<script type="text/javascript">
+angular.module('docsBindExample', [])
+.controller('Controller', ['$scope', function($scope) {
+  $scope.name = 'Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)';
+}]);
+
+it('should show off bindings', function() {
+  expect(element(by.css('div[ng-controller="Controller"] span[ng-bind]')).getText())
+      .toBe('Max Karl Ernst Ludwig Planck (April 23, 1858 – October 4, 1947)');
+});
+</script>
+</head>
+<body>
+<div ng-controller="Controller">
+  Hello <input ng-model='name'> <hr/>
+  <span ng-bind="name"></span> <br/>
+  <span ng:bind="name"></span> <br/>
+  <span ng_bind="name"></span> <br/>
+  <span data-ng-bind="name"></span> <br/>
+  <span x-ng-bind="name"></span> <br/>
+</div>
+</body>
+</html>

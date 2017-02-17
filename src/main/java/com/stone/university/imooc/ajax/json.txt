@@ -1,0 +1,15 @@
+JSON
+JavaScript Object Notation
+{"staff":[{"name":"jack","age":33},{"name":"peter","age":33},{"name":"bill","age":33}]}
+
+
+eval
+JSON.parse
+
+var jsondata = '{"staff":[{"name":"jack","age":33},{"name":"peter","age":33},{"name":"bill","age":33}]}';
+var jsonobj = eval('('+jsondata+')');
+alert(jsonobj.staff[0].name);
+
+var jsondata = '{"staff":[{"name":"jack","age":33},{"name":"peter","age":33},{"name":"bill","age":33}]}';
+var jsonobj = JSON.parse(jsondata);
+alert(jsonobj.staff[0].name);

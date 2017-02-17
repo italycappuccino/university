@@ -1,0 +1,171 @@
+<!doctype html>
+<html ng-app="myServiceModule">
+<head>
+<script src="../static/angularjs/1.4.4/angular.min.js"></script>
+<script type="text/javascript">
+angular.
+module('myServiceModule', []).filter('decorate', ['decoration', function(decoration) {
+
+  function decorateFilter(input) {
+    return decoration.symbol + input + decoration.symbol;
+  }
+  decorateFilter.$stateful = true;
+
+  return decorateFilter;
+}])
+.controller('MyController3', ['$scope', 'decoration', function($scope, decoration) {
+  $scope.greeting = 'hello';
+  $scope.decoration = decoration;
+}])
+.value('decoration', {symbol: '*'}).filter('reverse', function() {
+  return function(input, uppercase) {
+    input = input || '';
+    var out = "";
+    for (var i = 0; i < input.length; i++) {
+      out = input.charAt(i) + out;
+    }
+    // conditional based on optional argument
+    if (uppercase) {
+      out = out.toUpperCase();
+    }
+    return out;
+  };
+})
+.controller('MyController2', ['$scope', function($scope) {
+  $scope.greeting = 'hello';
+}]).controller('FilterController', ['filterFilter', function(filterFilter) {
+  this.array = [
+    {name: 'Tobias'},
+    {name: 'Jeff'},
+    {name: 'Brian'},
+    {name: 'Igor'},
+    {name: 'James'},
+    {name: 'Brad'}
+  ];
+  this.filteredArray = filterFilter(this.array, 'a');
+}]).controller('EventController', ['$scope', function($scope) {
+  var counter = 0;
+  var names = ['Igor', 'Misko', 'Chirayu', 'Lucas'];
+  /*
+   * expose the event object to the scope
+   */
+  $scope.clickMe = function(clickEvent) {
+    $scope.name = names[counter % names.length];
+    counter++;
+  };
+}]).controller('ExampleController', ['$scope', function($scope) {
+  var exprs = $scope.exprs = [];
+  $scope.expr = '3*10|currency';
+  $scope.addExp = function(expr) {
+    exprs.push(expr);
+  };
+
+  $scope.removeExp = function(index) {
+    exprs.splice(index, 1);
+  };
+}]).
+ controller('MyController', ['$scope','notify', function ($scope, notify) {
+   $scope.callNotify = function(msg) {
+     notify(msg);
+   };
+ }]).
+factory('notify', ['$window', function(win) {
+   var msgs = [];
+   return function(msg) {
+     msgs.push(msg);
+     if (msgs.length == 3) {
+       win.alert(msgs.join("\n"));
+       msgs = [];
+     }
+   };
+ }]);
+ 
+ it('should test service', function() {
+  expect(element(by.id('simple')).element(by.model('message')).getAttribute('value'))
+      .toEqual('test');
+});
+
+it('should allow user expression testing', function() {
+  element(by.css('.expressions button')).click();
+  var lis = element(by.css('.expressions ul')).all(by.repeater('expr in exprs'));
+  expect(lis.count()).toBe(1);
+  expect(lis.get(0).getText()).toEqual('[ X ] 3*10|currency => $30.00');
+});
+
+it('should freeze binding after its value has stabilized', function() {
+  var oneTimeBiding = element(by.id('one-time-binding-example'));
+  var normalBinding = element(by.id('normal-binding-example'));
+
+  expect(oneTimeBiding.getText()).toEqual('One time binding:');
+  expect(normalBinding.getText()).toEqual('Normal binding:');
+  element(by.buttonText('Click Me')).click();
+
+  expect(oneTimeBiding.getText()).toEqual('One time binding: Igor');
+  expect(normalBinding.getText()).toEqual('Normal binding: Igor');
+  element(by.buttonText('Click Me')).click();
+
+  expect(oneTimeBiding.getText()).toEqual('One time binding: Igor');
+  expect(normalBinding.getText()).toEqual('Normal binding: Misko');
+
+  element(by.buttonText('Click Me')).click();
+  element(by.buttonText('Click Me')).click();
+
+  expect(oneTimeBiding.getText()).toEqual('One time binding: Igor');
+  expect(normalBinding.getText()).toEqual('Normal binding: Lucas');
+});
+
+</script>
+</head>
+<body>
+
+<div ng-controller="MyController3">
+  Input: <input ng-model="greeting" type="text"><br>
+  Decoration: <input ng-model="decoration.symbol" type="text"><br>
+  No filter: {{greeting}}<br>
+  Decorated: {{greeting | decorate}}<br>
+</div>
+
+<div ng-controller="MyController2">
+  <input ng-model="greeting" type="text"><br>
+  No filter: {{greeting}}<br>
+  Reverse: {{greeting|reverse}}<br>
+  Reverse + uppercase: {{greeting|reverse:true}}<br>
+</div>
+
+<div id="simple" ng-controller="MyController">
+  <p>Let's try this simple notify service, injected into the controller...</p>
+  <input ng-init="message='test'" ng-model="message" >
+  <button ng-click="callNotify(message);">NOTIFY</button>
+  <p>(you have to click 3 times to see an alert)</p>
+</div>
+
+<div ng-controller="ExampleController" class="expressions">
+  Expression:
+  <input type='text' ng-model="expr" size="80"/>
+  <button ng-click="addExp(expr)">Evaluate</button>
+  <ul>
+   <li ng-repeat="expr in exprs track by $index">
+     [ <a href="" ng-click="removeExp($index)">X</a> ]
+     <code>{{expr}}</code> => <span ng-bind="$parent.$eval(expr)"></span>
+    </li>
+  </ul>
+</div>
+
+<div ng-controller="EventController">
+  <button ng-click="clickMe($event)">Click Me</button>
+  <p id="one-time-binding-example">One time binding: {{::name}}</p>
+  <p id="normal-binding-example">Normal binding: {{name}}</p>
+</div>
+
+<div ng-controller="FilterController as ctrl">
+  <div>
+    All entries:
+    <span ng-repeat="entry in ctrl.array">{{entry.name}} </span>
+  </div>
+  <div>
+    Entries that contain an "a":
+    <span ng-repeat="entry in ctrl.filteredArray">{{entry.name}} </span>
+  </div>
+</div>
+</body>
+</html>

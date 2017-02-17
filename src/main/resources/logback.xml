@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d [%thread] %level %logger - %m%n</Pattern>
+		</layout>
+	</appender>
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 每次启动生成，只记录当天的日志 -->
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+    <File>/Users/Peter/Documents/logs/university-file.log</File>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <Pattern>%d %p %t %c - %m%n</Pattern>
+    </layout>
+  </appender>
+  
+  <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/Users/Peter/Documents/logs/university-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+	<logger name="com.ibatis" value="debug"/>
+	<logger name="java.sql" value="debug" />
+	<logger name="com.stone.core" value="debug" />
+	
+	
+	<!-- <logger name="com.ibatis" level="DEBUG" />
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" />
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
+    <logger name="java.sql.Connection" level="DEBUG" />
+    <logger name="java.sql.Statement" level="DEBUG" />
+    <logger name="java.sql.PreparedStatement" level="DEBUG" /> -->
+	
+
+	<root level="debug">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE"/>
+		<appender-ref ref="RollingFile"/>
+	</root>
+
+</configuration>

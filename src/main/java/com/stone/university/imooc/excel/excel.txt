@@ -1,0 +1,21 @@
+读写Excel常用的技术
+
+一、POI
+二、JXL
+三、FASTEXCEL，支持Excel97-2003
+
+
+
+Apache POI
+HSSF，Horrible SpreadSheet Format
+
+XSSF，读写OOXML格式
+HWPF，读写word格式
+HSLF，读写PowerPoint格式
+HDGF，读写Visio格式
+
+iText，生成PDF或rtf文档 ，将XML，HTML文件转化成PDF文档
+
+
+
+

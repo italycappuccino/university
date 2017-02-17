@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="City">
+	<typeAlias alias="city" type="com.stone.core.entity.City"/>
+	<resultMap class="city" id="resultMap">
+		<result property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="countryCode" column="countrycode"/>
+		<result property="district" column="district"/>
+		<result property="population" column="population"/>
+	</resultMap>
+	
+	<sql id="city_columns">
+		id,name,countrycode,district,population
+	</sql>
+	<sql id="city_conditions">
+		<isNotEmpty prepend="and" property="id">id=#id#</isNotEmpty>
+		<isNotEmpty prepend="and" property="name">name=#name#</isNotEmpty>
+		<isNotEmpty prepend="and" property="countryCode">countrycode=#countryCode#</isNotEmpty>
+		<isNotEmpty prepend="and" property="district">district=#district#</isNotEmpty>
+		<isNotEmpty prepend="and" property="population">population=#population#</isNotEmpty>
+	</sql>
+	
+	<select id="findCityByName" parameterClass="java.lang.String" resultMap="resultMap">
+		select <include refid="city_columns"/> from city where name = #name# 
+	</select>
+	
+	<select id="findCityByCode" parameterClass="java.lang.String" resultMap="resultMap">
+		select <include refid="city_columns"/> from city where countrycode = #code# 
+	</select>
+
+</sqlMap>
