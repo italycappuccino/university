@@ -100,20 +100,6 @@
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>zhongan</find>
-      <find>众安</find>
-      <find>天使汇</find>
-    </findStrings>
-    <replaceStrings>
-      <replace />
-      <replace>项目</replace>
-    </replaceStrings>
-    <dirStrings>
-      <dir>$PROJECT_DIR$</dir>
-    </dirStrings>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
